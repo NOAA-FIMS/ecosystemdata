@@ -1,0 +1,35 @@
+#' EWE data for the NW Atlantic
+#'
+#' Ecopath with Ecosim data for the Northwest Atlantic ocean, where each data
+#' object is from a different run. E.g., `base` is from the base model run and
+#' `env` is from the run using environmental variables.
+#'
+#' @format ## `EWE NW Atlantic`
+#' A tibble with `r NROW(ewe_nwatlantic_base)` rows and the following
+#' `r NCOL(ewe_nwatlantic_base)` columns:
+#' \describe{
+#'   \item{file_name}{The path to the file name, note that the path could be a
+#'     relative path. This column is helpful for understanding which EWE model
+#'     and which run the data came from.
+#'   }
+#'   \item{type}{The type refers to what data type this row is, e.g., landings, 
+#'     catch, biomass, weight, and mortality.
+#'   }
+#'   \item{year}{A four-digit integer specifying the year.}
+#'   \item{month}{A one- or two-digit integer specifying the month.}
+#'   \item{function_group}{A string specifying the functional group that this
+#'     row pertains to.
+#'   }
+#'   \item{value}{A real number containing the value of interest.}
+#'   \item{fleet}{An integer specifying which fleet the data pertains to.}
+#' }
+#' @source <https://www.github.com/nmfs-ost/>
+#' @references
+#' Chagaris, D., Drew, K., Schueller, A., Cieri, M., Brito, J., and
+#' Buchheister, A. 2020. Ecological reference points for Atlantic menhaden
+#' established using an ecosystem model of intermediate complexity. Frontiers
+#' in Marine Science, 7:606417. 10.3389/fmars.2020.606417.
+"ewe_nwatlantic_base"
+
+#' @rdname ewe_nwatlantic_base
+"ewe_nwatlantic_env"
