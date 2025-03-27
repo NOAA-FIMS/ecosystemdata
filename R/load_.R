@@ -43,18 +43,30 @@
 load_csv_ewe <- function(file_path, model_years, functional_groups) {
   # Load the EwE data file and extract the data
   data <- read_n_skip(file_path)
-  # Read the data into a data frame and add year and month columns
-  data <- read.table(
-    text = as.character(data),
-    sep = ",",
-    col.names = c("timestep", functional_groups)
-  ) |> 
-    dplyr::mutate(
-      year = rep(model_years, each = 12),
-      month = rep(1:12, times = length(model_years))
-    ) |>
-    dplyr::select(year, month, everything())
-    return(data)
+  if (
+    NCOL(data) == length(functional_groups) + 1 &&
+    colnames(data)[2] == "X1"
+  ) {
+    colnames(data) <- c("timestep", functional_groups)
+    # Read the data into a data frame and add year and month columns
+    out <- data |>
+      dplyr::mutate(
+        year = rep(model_years, each = 12),
+        month = rep(1:12, times = length(model_years))
+      )
+  } else {
+    out <- data |>
+      dplyr::rename(
+        month = dplyr::starts_with("timestep")
+      ) |>
+      dplyr::group_by(fleet) |>
+      dplyr::mutate(
+        year = rep(model_years, each = 12)
+      ) |>
+      dplyr::ungroup()
+  }
+  out |>
+      dplyr::select(year, month, everything())
 }
 
 #' Load an ecosystem model
@@ -73,9 +85,10 @@ load_model <- function(..., type = c("ewe", "atlantis")) {
 load_model_ewe <- function(directory, functional_groups) {
   # Determine the number of years in the model
   years <- read_n_skip(
-    file_path = fs::path(directory, "biomass_annual.csv")
+    file_path = fs::path(directory, "biomass_annual.csv"),
+    keyword = "year"
   ) |>
-    dplyr::pull(year.group)
+    dplyr::pull(1)
 
   # Load monthly data
   terms <- c("biomass", "catch", "landings")
@@ -84,14 +97,17 @@ load_model_ewe <- function(directory, functional_groups) {
     regexp = paste(.Platform[["file.sep"]], terms, "_monthly", sep = "", collapse = "|"),
     type = "file"
   )
+
   data_monthly <- purrr::map_df(
     monthly_files,
     load_csv_ewe,
-    functional_groups = functional_groups
+    functional_groups = functional_groups,
+    model_years = years,
     .id = "file_name"
   )
   
   # TODO: build up this data set
-  data_output <- data_monthly
+  data_output <- data_monthly |>
+    tibble::as_tibble()
   return(data_output)
 }

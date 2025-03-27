@@ -2,11 +2,17 @@
 #' @noRd
 read_n_skip <- function(file_path, keyword = "timestep") {
   # Load the data file
-  temp <- scan(file_path, what = "", sep = "\n")
+  temp <- scan(file_path, what = "", sep = "\n", quiet = TRUE)
   # For example with the default
   # Find the line containing "timestep\\group" to skip
-  skip_nrows <- which(grepl(keyword, temp))
+  skip_n_rows <- which(grepl(keyword, temp))
+  column_names <- temp[skip_n_rows] |>
+    strsplit(",")
   # Extract the data
-  data <- temp[-c(1:skip_nrows)]
-  return(data)
+  data <- temp[-c(1:skip_n_rows)]
+  read.table(
+    text = as.character(data),
+    sep = ",",
+    col.names = column_names[[1]]
+  )
 }

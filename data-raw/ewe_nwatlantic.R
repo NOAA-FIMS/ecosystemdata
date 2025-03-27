@@ -18,12 +18,14 @@ functional_groups <- c(
   "Detritus"
 ) 
 ewe_nwatlantic_base <- load_model(
-  directory = fs::fs_path("data-raw", "ewe_nwatlantic", "base_run"),
-  type = "ewe"
+  directory = fs::path("data-raw", "ewe_nwatlantic", "base_run"),
+  type = "ewe",
+  functional_groups = functional_groups
 )
 ewe_nwatlantic_env <- load_model(
-  directory = fs::fs_path("data-raw", "ewe_nwatlantic", "environmental_link"),
-  type = "ewe"
+  directory = fs::path("data-raw", "ewe_nwatlantic", "environmental_link"),
+  type = "ewe",
+  functional_groups = functional_groups
 )
 
 usethis::use_data(ewe_nwatlantic_base, overwrite = TRUE)
