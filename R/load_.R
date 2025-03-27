@@ -91,7 +91,7 @@ load_model_ewe <- function(directory, functional_groups) {
     dplyr::pull(1)
 
   # Load monthly data
-  terms <- c("biomass", "catch", "landings")
+  terms <- c("biomass", "catch", "landings", "weight")
   monthly_files <- fs::dir_ls(
     path = directory,
     regexp = paste(.Platform[["file.sep"]], terms, "_monthly", sep = "", collapse = "|"),
