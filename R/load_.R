@@ -53,7 +53,13 @@ load_csv_ewe <- function(file_path, model_years, functional_groups) {
       dplyr::mutate(
         year = rep(model_years, each = 12),
         month = rep(1:12, times = length(model_years))
-      )
+      ) |>
+      tidyr::pivot_longer(
+        cols = functional_groups,
+        names_to = "functional_group",
+        values_to = "value"
+      ) |>
+      dplyr::select(-timestep)
   } else {
     out <- data |>
       dplyr::rename(
@@ -63,10 +69,17 @@ load_csv_ewe <- function(file_path, model_years, functional_groups) {
       dplyr::mutate(
         year = rep(model_years, each = 12)
       ) |>
-      dplyr::ungroup()
+      dplyr::ungroup() |>
+      dplyr::mutate(
+        functional_group = functional_groups[group]
+      ) |>
+      dplyr::select(-group)
   }
   out |>
-      dplyr::select(year, month, everything())
+    dplyr::mutate(
+      type = get_type_from_file(file_path)
+    ) |>
+    dplyr::select(type, year, month, everything())
 }
 
 #' Load an ecosystem model
@@ -110,4 +123,9 @@ load_model_ewe <- function(directory, functional_groups) {
   data_output <- data_monthly |>
     tibble::as_tibble()
   return(data_output)
+}
+
+get_type_from_file <- function(file_path) {
+  base <- basename(file_path)
+  gsub("_monthly|_annual|\\.csv", "", base)
 }
