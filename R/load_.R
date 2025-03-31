@@ -63,9 +63,15 @@ load_csv_ewe <- function(file_path, model_years, functional_groups) {
   } else {
     out <- data |>
       dplyr::rename(
-        month = dplyr::starts_with("timestep")
+        timestep = dplyr::starts_with("timestep")
       ) |>
-      dplyr::group_by(fleet) |>
+      dplyr::mutate(
+        reference = (timestep %/% 12) + 1,
+        year = model_years[(timestep %/% 12) + 1],
+        month = timestep %% 12,
+        month = ifelse(month == 0, 12, month)
+      ) |>
+      dplyr::group_by(fleet, group) |>
       dplyr::mutate(
         year = rep(model_years, each = 12)
       ) |>
@@ -73,7 +79,7 @@ load_csv_ewe <- function(file_path, model_years, functional_groups) {
       dplyr::mutate(
         functional_group = functional_groups[group]
       ) |>
-      dplyr::select(-group)
+      dplyr::select(-group, -timestep)
   }
   out |>
     dplyr::mutate(
