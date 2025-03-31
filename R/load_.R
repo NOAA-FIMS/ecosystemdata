@@ -1,3 +1,5 @@
+utils::globalVariables(c("timestep", "group", "fleet", "month", "type", "year"))
+
 #' Load in EwE monthly output data
 #' 
 #' @description
@@ -8,11 +10,16 @@
 #' after havgina a utility function to extract model years globally from annual data
 #' @param functional_groups A vector of names of the functional groups in the model.
 #' 
-#' @export 
+#' @export
 #' @examples
+#' \dontrun{
+#' # The following example is not run by default because these files are only
+#' # included in the GitHub clone of the repository and not in the package data
 #' load_csv_ewe(
-#'   file_path = fs::path("data-raw", "ewe_nwatlantic", "base_run", "biomass_monthly.csv"),
-#'   model_years = 1985:2017, 
+#'   file_path = fs::path(
+#'     "data-raw", "ewe_nwatlantic", "base_run", "biomass_monthly.csv"
+#'   ),
+#'   model_years = 1985:2017,
 #'   functional_groups = c(
 #'     "StripedBass0",
 #'     "StripedBass2_5",
@@ -36,8 +43,9 @@
 #'     "Zooplankton",
 #'     "Phytoplankton",
 #'     "Detritus"
-#'   ) 
+#'   )
 #' )
+#' }
 # TODO: double check that average of montly data matches annual data for more than just biomass
 
 load_csv_ewe <- function(file_path, model_years, functional_groups) {
@@ -85,11 +93,27 @@ load_csv_ewe <- function(file_path, model_years, functional_groups) {
     dplyr::mutate(
       type = get_type_from_file(file_path)
     ) |>
-    dplyr::select(type, year, month, everything())
+    dplyr::select(type, year, month, dplyr::everything())
 }
 
 #' Load an ecosystem model
+#'
+#' Load the necessary files from an ecosystem model and return a single, long
+#' data frame of information.
+#'
+#' @param ... Arguments that are passed onto lower level `load_model_()*`
+#'   functions. Such as those needed for `load_model_ewe()`, which are
+#'   `directory` and `functional_groups`.
+#' @param type A string indicating which type of model data you want to load.
+#'   The default is `r toString(formals(load_model)[["type"]][2])`. Strings
+#'   should be all lower case text.
+#'
+#' @export
+#' @return
+#' A tibble is returned that matches the structure of [ewe_nwatlantic_base].
+#'
 load_model <- function(..., type = c("ewe", "atlantis")) {
+  type <- tolower(type)
   type <- rlang::arg_match(type)
   if (type == "ewe") {
     model <- load_model_ewe(...)

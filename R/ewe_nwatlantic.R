@@ -1,31 +1,34 @@
-#' World Health Organization TB data
+#' EWE data for the NW Atlantic
 #'
-#' A subset of data from the World Health Organization Global Tuberculosis
-#' Report ...
+#' Ecopath with Ecosim data for the Northwest Atlantic ocean, where each data
+#' object is from a different run. E.g., `base` is from the base model run and
+#' `env` is from the run using environmental variables.
 #'
-#' @format ## `who`
-#' A data frame with 7,240 rows and 60 columns:
+#' @format ## `EWE NW Atlantic`
+#' A tibble with `r NROW(ewe_nwatlantic_base)` rows and the following
+#' `r NCOL(ewe_nwatlantic_base)` columns:
 #' \describe{
-#'   \item{country}{Country name}
-#'   \item{iso2, iso3}{2 & 3 letter ISO country codes}
-#'   \item{year}{Year}
-#'   ...
+#'   \item{file_name}{The path to the file name, note that the path could be a
+#'     relative path. This column is helpful for understanding which EWE model
+#'     and which run the data came from.
+#'   }
+#'   \item{type}{The type refers to what data type this row is, e.g., landings,
+#'     biomass, weight.
+#'   }
+#'   \item{year}{A four-digit integer specifying the year.}
+#'   \item{month}{A one- or two-digit integer specifying the month.}
+#'   \item{function_group}{A string specifying the functional group that this
+#'     row pertains to.
+#'   }
+#'   \item{value}{A real number containing the value of interest.}
+#'   \item{fleet}{An integer specifying which fleet the data pertains to.}
 #' }
-#' @source <https://www.who.int/teams/global-tuberculosis-programme/data>
+#' @source <https://www.github.com/nmfs-ost/>
+#' @references
+#' Chagaris, D., Drew, K., Schueller, A., Cieri, M., Brito, J., and
+#' Buchheister, A. 2020. Ecological reference points for Atlantic menhaden
+#' established using an ecosystem model of intermediate complexity. Frontiers
+#' in Marine Science, 7:606417. 10.3389/fmars.2020.606417.
 "ewe_nwatlantic_base"
 
-#' World Health Organization TB data
-#'
-#' A subset of data from the World Health Organization Global Tuberculosis
-#' Report ...
-#'
-#' @format ## `who`
-#' A data frame with 7,240 rows and 60 columns:
-#' \describe{
-#'   \item{country}{Country name}
-#'   \item{iso2, iso3}{2 & 3 letter ISO country codes}
-#'   \item{year}{Year}
-#'   ...
-#' }
-#' @source <https://www.who.int/teams/global-tuberculosis-programme/data>
-"ewe_nwatlantic_env"
+#' @rdname ewe_nwatlantic_env

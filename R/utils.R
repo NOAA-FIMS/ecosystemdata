@@ -10,7 +10,7 @@ read_n_skip <- function(file_path, keyword = "timestep") {
     strsplit(",")
   # Extract the data
   data <- temp[-c(1:skip_n_rows)]
-  read.table(
+  utils::read.table(
     text = as.character(data),
     sep = ",",
     col.names = column_names[[1]]
