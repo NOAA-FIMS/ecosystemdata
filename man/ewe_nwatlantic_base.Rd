@@ -3,6 +3,7 @@
 \docType{data}
 \name{ewe_nwatlantic_base}
 \alias{ewe_nwatlantic_base}
+\alias{ewe_nwatlantic_env}
 \title{EWE data for the NW Atlantic}
 \format{
 \subsection{\verb{EWE NW Atlantic}}{
@@ -26,12 +27,16 @@ row pertains to.
 \item{fleet}{An integer specifying which fleet the data pertains to.}
 }
 }
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 26928 rows and 8 columns.
 }
 \source{
 \url{https://www.github.com/nmfs-ost/}
 }
 \usage{
 ewe_nwatlantic_base
+
+ewe_nwatlantic_env
 }
 \description{
 Ecopath with Ecosim data for the Northwest Atlantic ocean, where each data

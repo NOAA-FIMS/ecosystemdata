@@ -31,4 +31,5 @@
 #' in Marine Science, 7:606417. 10.3389/fmars.2020.606417.
 "ewe_nwatlantic_base"
 
-#' @rdname ewe_nwatlantic_env
+#' @rdname ewe_nwatlantic_base
+"ewe_nwatlantic_env"
