@@ -10,7 +10,20 @@ utils::globalVariables(c("V1", "V2"))
 #'
 #' @param file_path The path to the EwE file.
 #' @return
-#' A vector of functional group names.
+#' A tibble with the following three columns:
+#' \itemize{
+#'   \item function_group. The full functional group name from the model. This
+#'         column is helpful for error checking and debugging.
+#'   \item species. The species name from the functional group name. This
+#'         column should only contain text strings and no numbers or special
+#'         characters. There will potentially be multiple rows with the same
+#'         species name because there can be multiple age groups for a given
+#'         species.
+#'   \item group. The group name as a string. This column can contain digits,
+#'         special characters, and text strings. It is used to
+#'         delineate the group within a species. Not all species will have
+#'         multiple groups.
+#' }
 #' @export
 #' @examples
 #' get_functional_groups(
@@ -23,7 +36,7 @@ get_functional_groups <- function(file_path) {
   # Load the EwE data file and extract the data
   temp <- scan(file_path, what = "", sep = "\n", quiet = TRUE)
   # Extract the data
-  utils::read.table(
+  out_vector <- utils::read.table(
     text = as.character(temp[-1]),
     sep = ","
   ) |> 
@@ -31,4 +44,7 @@ get_functional_groups <- function(file_path) {
     dplyr::filter(!is.na(V1)) |>
     # Pull the names of the functional groups
     dplyr::pull(V2)
+  
+  # Return a tibble with the functional groups, species, and group names
+  split_functional_groups(out_vector)
 }

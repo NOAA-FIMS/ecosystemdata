@@ -32,7 +32,7 @@ test_that("load_model() works with correct inputs", {
   
   expected_colnames <- c(
     "file_name", "type", "year", "month", "functional_group", 
-    "value", "fleet", "reference"
+    "value", "species", "group", "fleet", "reference"
   )
   #' @description Test that load_model() returns correct columns.
   expect_equal(
@@ -54,7 +54,7 @@ test_that("load_model() works with correct inputs", {
   no_landings_nrow <- ewe_model |>
     dplyr::filter(type != "landings") |>
     nrow()
-  expected_nrow <- 12 * length(model_years) * length(functional_groups) * (length(expected_types) - 1)
+  expected_nrow <- 12 * length(model_years) * NROW(functional_groups) * (length(expected_types) - 1)
   expect_equal(
     object = no_landings_nrow,
     expected = expected_nrow
