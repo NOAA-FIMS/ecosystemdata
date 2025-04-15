@@ -32,10 +32,10 @@ load_csv_ewe <- function(file_path, model_years, functional_groups) {
   # Load the EwE data file and extract the data
   data <- read_n_skip(file_path)
   if (
-    NCOL(data) == length(functional_groups) + 1 &&
+    NCOL(data) == NROW(functional_groups) + 1 &&
       colnames(data)[2] == "X1"
   ) {
-    colnames(data) <- c("timestep", functional_groups)
+    colnames(data) <- c("timestep", functional_groups[["functional_group"]])
     # Read the data into a data frame and add year and month columns
     out <- data |>
       dplyr::mutate(
@@ -43,12 +43,13 @@ load_csv_ewe <- function(file_path, model_years, functional_groups) {
         month = rep(1:12, times = length(model_years))
       ) |>
       tidyr::pivot_longer(
-        cols = tidyselect::all_of(functional_groups),
+        cols = tidyselect::all_of(functional_groups[["functional_group"]]),
         names_to = "functional_group",
         values_to = "value"
       ) |>
       dplyr::select(-timestep)
   } else {
+    functional_groups_vector <- functional_groups[["functional_group"]]
     out <- data |>
       dplyr::rename(
         timestep = dplyr::starts_with("timestep")
@@ -65,13 +66,17 @@ load_csv_ewe <- function(file_path, model_years, functional_groups) {
       ) |>
       dplyr::ungroup() |>
       dplyr::mutate(
-        functional_group = functional_groups[group]
+        functional_group = functional_groups_vector[group]
       ) |>
       dplyr::select(-group, -timestep)
   }
   out |>
     dplyr::mutate(
       type = get_type_from_file(file_path)
+    ) |>
+    dplyr::left_join(
+      functional_groups,
+      by = "functional_group"
     ) |>
     dplyr::select(type, year, month, dplyr::everything())
 }

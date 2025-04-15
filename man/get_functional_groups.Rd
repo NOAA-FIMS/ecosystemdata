@@ -10,7 +10,20 @@ get_functional_groups(file_path)
 \item{file_path}{The path to the EwE file.}
 }
 \value{
-A vector of functional group names.
+A tibble with the following three columns:
+\itemize{
+\item function_group. The full functional group name from the model. This
+column is helpful for error checking and debugging.
+\item species. The species name from the functional group name. This
+column should only contain text strings and no numbers or special
+characters. There will potentially be multiple rows with the same
+species name because there can be multiple age groups for a given
+species.
+\item group. The group name as a string. This column can contain digits,
+special characters, and text strings. It is used to
+delineate the group within a species. Not all species will have
+multiple groups.
+}
 }
 \description{
 Functional group names are useful for the column names of output data from
