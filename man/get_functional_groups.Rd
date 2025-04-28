@@ -35,7 +35,7 @@ estimates file.
 get_functional_groups(
   file_path = fs::path(
     system.file("extdata", package = "ecosystemdata"),
-    "ewe_nwatlantic", "base_run", "basic_estimates.csv"
+    "ewe_nwatlantic", "environmental_link", "basic_estimates.csv"
   )
 )
 }

@@ -29,7 +29,7 @@ utils::globalVariables(c("V1", "V2"))
 #' get_functional_groups(
 #'   file_path = fs::path(
 #'     system.file("extdata", package = "ecosystemdata"),
-#'     "ewe_nwatlantic", "base_run", "basic_estimates.csv"
+#'     "ewe_nwatlantic", "environmental_link", "basic_estimates.csv"
 #'   )
 #' )
 get_functional_groups <- function(file_path) {
