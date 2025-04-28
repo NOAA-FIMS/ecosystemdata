@@ -1,4 +1,4 @@
-utils::globalVariables(c("timestep", "group", "fleet", "month", "type", "year"))
+utils::globalVariables(c("timestep", "group", "fleet", "month", "type", "year", "value"))
 
 #' Load in EwE monthly output data
 #'
@@ -110,7 +110,15 @@ load_model <- function(..., type = c("ewe", "atlantis")) {
   return(model)
 }
 
-load_model_ewe <- function(directory, functional_groups) {
+load_model_ewe <- function(directory, functional_groups,
+                           unit = c(
+                             "biomass" = "mt",
+                             "catch" = "mt",
+                             "landings" = "mt",
+                             "mortality" = "year^-1",
+                             "weight" = "mt"
+                           )
+) {
   # Determine the number of years in the model
   years <- read_n_skip(
     file_path = fs::path(directory, "biomass_annual.csv"),
@@ -136,11 +144,74 @@ load_model_ewe <- function(directory, functional_groups) {
 
   # TODO: build up this data set
   data_output <- data_monthly |>
-    tibble::as_tibble()
+    tibble::as_tibble() |>
+    dplyr::mutate(
+      unit = unit[type]
+    )
   return(data_output)
 }
 
 get_type_from_file <- function(file_path) {
   base <- basename(file_path)
   gsub("_monthly|_annual|\\.csv", "", base)
+}
+
+
+#' Load environmental data from a CSV file
+#' 
+#' @param file_path A string. Path to the CSV file containing the environmental data.
+#'   The CSV file must contain the following columns: 
+#'     - `index`: Name of the environmental index (character).
+#'     - `year`: Year corresponding to each value (integer).
+#'     - `month`: Month corresponding to each value (integer).
+#'     - `value`: Value of the index (numeric).
+#'     - `unit`: Unit of the index (character).
+#' @param lag_months An integer. The lag between environmental index and functional group, in months.
+#'   For example, if lag_months = 12, the environmental effect is assumed to influence the functional 
+#'   group with a 12-month delay.
+#' @param impacted_group A string indicating the functional group impacted by the environmental index.
+#' 
+#' @return A tibble containing the environmental data with lag and functional group information.
+#' 
+#' @examples
+#' data <- load_csv_environmental_data(
+#'   file_path = file.path(
+#'     system.file("extdata", package = "ecosystemdata"),
+#'     "ewe_nwatlantic", "environmental_link", "amo_lag1.csv"
+#'   ),
+#'   lag_months = 12,
+#'   impacted_group = "menhaden 0"
+#' )
+#'
+#' @export
+load_csv_environmental_data <- function(file_path, lag_months, impacted_group) {
+  # Read the CSV file
+  data <- utils::read.csv(file_path)
+
+  # Validate required columns
+  required_columns <- c("index", "year", "month", "value", "unit")
+  missing_columns <- setdiff(required_columns, colnames(data))
+  if (length(missing_columns) > 0) {
+    cli::cli_abort(c(
+      "The CSV file must contain the following columns: {.val {required_columns}}.",
+      "x" = "Missing column(s): {.val {missing_columns}}."
+    ))
+  }
+
+  # Split the impacted group into species and group components
+  split_group <- split_functional_groups(impacted_group)
+
+  # Reshape the data
+  out <- tibble::as_tibble(data) |>
+    dplyr::mutate(
+      year = as.integer(year),
+      month = as.integer(month),
+      value = as.numeric(value),
+      lag_months = ifelse(is.na(value), NA, as.integer(lag_months)),
+      impacted_group = impacted_group,
+      species = as.character(split_group[["species"]]),
+      group = as.character(split_group[["group"]])
+    )
+
+  return(out)
 }

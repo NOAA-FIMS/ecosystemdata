@@ -8,14 +8,14 @@
 
 # Setup ----
 # Load or prepare any necessary data for testing
-base_run_dir <- fs::path(
+data_dir <- fs::path(
   system.file("extdata", package = "ecosystemdata"),
-  "ewe_nwatlantic", "base_run"
+  "ewe_nwatlantic", "environmental_link"
 )
 
 functional_groups <- get_functional_groups(
   file_path = fs::path(
-    base_run_dir, "basic_estimates.csv"
+    data_dir, "basic_estimates.csv"
   )
 )
 
@@ -25,16 +25,29 @@ model_years <- 1985:2017
 ## IO correctness ----
 test_that("load_model() works with correct inputs", {
   ewe_model <- load_model(
-    directory = base_run_dir,
+    directory = data_dir,
     functional_groups = functional_groups, 
-    type = "ewe"
+    type = "ewe",
+    unit = c(
+      "biomass" = "mt",
+      "catch" = "mt",
+      "landings" = "mt",
+      "mortality" = "year^-1",
+      "weight" = "kg"
+    )
   )
   
   expected_colnames <- c(
     "file_name", "type", "year", "month", "functional_group", 
-    "value", "species", "group", "fleet", "reference"
+    "value", "species", "group", "fleet", "reference", "unit"
   )
   #' @description Test that load_model() returns correct columns.
+  expect_equal(
+    object = ewe_model |> dplyr::filter(type == "weight") |> dplyr::pull(unit) |> unique(),
+    expected = "kg"
+  )
+
+  #' @description Test that unit for weight is kg.
   expect_equal(
     object = colnames(ewe_model),
     expected = expected_colnames
@@ -66,7 +79,7 @@ test_that("load_model() returns correct outputs for edge cases", {
   #' @description Test that load_model() without functional_groups returns an error.
   expect_error(
     object = load_model(
-      directory = base_run_dir,
+      directory = data_dir,
       type = "ewe"
     ),
     regexp = "is missing, with no default"
