@@ -3,4 +3,5 @@
 export(get_functional_groups)
 export(load_csv_ewe)
 export(load_model)
+export(reshape_environment_data)
 export(split_functional_groups)
