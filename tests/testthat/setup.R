@@ -23,8 +23,8 @@ if (grepl("oid", temp[2])) {
     switch(
       sysname,
       "Linux" = system("sudo apt update; sudo apt install -y git-lfs; git lfs install", intern = TRUE),
-      "Darwin" = system("brew install git-lfs; git lfs install", intern = TRUE),
-      "Windows" = system("winget install -e --id GitHub.GitLFS; git lfs install", intern = TRUE)
+      "Darwin" = system("brew reinstall git-lfs; git lfs install", intern = TRUE),
+      "Windows" = system("curl -LO https://github.com/git-lfs/git-lfs/releases/download/v3.6.1/git-lfs-windows-v3.6.1.exe; /git-lfs-windows-v3.6.1.exe; git lfs install", intern = TRUE)
     )
   } else {
     # If git LFS is installed, pull the data

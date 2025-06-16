@@ -16,9 +16,6 @@ jobs:
           lfs: true
       - name: Install git-lfs
         run: |
-          sudo apt-get update
-          sudo apt-get install git-lfs
-          git lfs install
           git lfs pull
   call-workflow:
     uses: nmfs-ost/ghactions4r/.github/workflows/r-cmd-check.yml@main
