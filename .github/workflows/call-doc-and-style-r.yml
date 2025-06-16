@@ -1,0 +1,17 @@
+# Runs devtools::document() and styler::style_active_package(), then opens a
+# pull request to the branch that had changes in the push that triggered the
+# workflow.
+name: call-doc-and-style-r
+
+on:
+  push:
+    # TODO: uncomment following lines once tests are passing
+    # branches: 
+    #   - main
+  workflow_dispatch:
+
+jobs:
+  call-workflow:
+    uses: nmfs-fish-tools/ghactions4r/.github/workflows/doc-and-style-r.yml@main
+    secrets:
+      PAT: ${{ secrets.PAT }}
