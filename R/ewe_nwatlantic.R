@@ -12,7 +12,7 @@
 #'     relative path. This column is helpful for understanding which EWE model
 #'     and which run the data came from.
 #'   }
-#'   \item{type}{The type refers to what data type this row is, e.g., landings, 
+#'   \item{type}{The type refers to what data type this row is, e.g., landings,
 #'     catch, biomass, weight, and mortality.
 #'   }
 #'   \item{year}{A four-digit integer specifying the year.}

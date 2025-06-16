@@ -26,12 +26,12 @@ model_years <- 1985:2017
 test_that("load_model() works with correct inputs", {
   ewe_model <- load_model(
     directory = base_run_dir,
-    functional_groups = functional_groups, 
+    functional_groups = functional_groups,
     type = "ewe"
   )
-  
+
   expected_colnames <- c(
-    "file_name", "type", "year", "month", "functional_group", 
+    "file_name", "type", "year", "month", "functional_group",
     "value", "species", "group", "fleet", "reference"
   )
   #' @description Test that load_model() returns correct columns.
