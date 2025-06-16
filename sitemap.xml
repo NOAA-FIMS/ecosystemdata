@@ -1,14 +1,14 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/LICENSE-text.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/reference/ewe_nwatlantic_base.html</loc></url>
-<url><loc>/reference/get_functional_groups.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
-<url><loc>/reference/load_csv_ewe.html</loc></url>
-<url><loc>/reference/load_model.html</loc></url>
-<url><loc>/reference/split_functional_groups.html</loc></url>
-<url><loc>/reference/use_testthat_template.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/404.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/LICENSE-text.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/authors.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/index.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/reference/ewe_nwatlantic_base.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/reference/get_functional_groups.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/reference/index.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/reference/load_csv_ewe.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/reference/load_model.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/reference/split_functional_groups.html</loc></url>
+<url><loc>https://NOAA-FIMS.github.io/ecosystemdata/reference/use_testthat_template.html</loc></url>
 </urlset>
 
