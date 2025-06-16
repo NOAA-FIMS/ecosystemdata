@@ -1,0 +1,12 @@
+# Updates the exiting pkgdown site for a repository by deploying the changes
+# made to the pkgdown site to a branch called gh-pages.
+name: call-update-pkgdown
+
+on:
+  push:
+    # TODO: uncomment following lines once tests are passing
+    # branches: [main]
+
+jobs:
+  call-workflow:
+    uses: nmfs-ost/ghactions4r/.github/workflows/update-pkgdown.yml@main

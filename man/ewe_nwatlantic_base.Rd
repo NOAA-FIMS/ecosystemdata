@@ -9,7 +9,7 @@
 \subsection{\verb{EWE NW Atlantic}}{
 
 A tibble with 35640 rows and the following
-8 columns:
+10 columns:
 \describe{
 \item{file_name}{The path to the file name, note that the path could be a
 relative path. This column is helpful for understanding which EWE model
@@ -28,7 +28,7 @@ row pertains to.
 }
 }
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 35640 rows and 8 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 35640 rows and 10 columns.
 }
 \source{
 \url{https://www.github.com/nmfs-ost/}
