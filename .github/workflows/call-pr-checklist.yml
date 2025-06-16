@@ -3,6 +3,8 @@
 name: Add a comment with reviewer checklist when PR opened
 
 on:
+  # TODO: remove push trigger once tests are passing
+  push:
   pull_request:
     types: [opened]
 
@@ -36,7 +38,7 @@ jobs:
             - [ ] The functionality is good for the users of the code.
             - [ ] Code coverage remains high, indicating the new code is tested.
             - [ ] The code is commented and the comments are clear, useful, and mostly explain why instead of what.
-            - [ ] Code is appropriately documented (doxygen and roxygen).
+            - [ ] Code is appropriately documented.
             `
             const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
             github.issues.createComment({ issue_number, owner, repo, body: msg });

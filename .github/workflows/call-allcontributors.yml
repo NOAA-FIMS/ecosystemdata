@@ -4,8 +4,10 @@
 name: Collect contributors
 
 on:
-  schedule:
-    - cron: '0 8 * * 1'
+  # schedule:
+  #   - cron: '0 8 * * 1'
+  # TODO: remove push trigger once tests are passing and uncomment schedule
+  push:
   workflow_dispatch:
 
 jobs:
