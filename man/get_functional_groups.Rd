@@ -27,7 +27,7 @@ multiple groups.
 }
 \description{
 Functional group names are useful for the column names of output data from
-an EeW model, and thus, this function is a way to get them automatically
+an EwE model, and thus, this function is a way to get them automatically
 from the EwE output. The functional group names come from the basic
 estimates file.
 }

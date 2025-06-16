@@ -6,6 +6,20 @@ on:
   workflow_dispatch:
 
 jobs:
+  # Install git LFS and pull the data
+  install-git-lfs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Install git-lfs
+        run: |
+          sudo apt-get update
+          sudo apt-get install git-lfs
+          git lfs install
+          git lfs pull
   call-workflow:
     uses: nmfs-ost/ghactions4r/.github/workflows/r-cmd-check.yml@main
     with: 

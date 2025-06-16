@@ -10,7 +10,7 @@ load_csv_ewe(file_path, model_years, functional_groups)
 \item{file_path}{The path to the CSV file containing the EwE output data.}
 
 \item{model_years}{A vector of years corresponding to the model years. TODO: this can be removed
-after havgina a utility function to extract model years globally from annual data}
+after having a utility function to extract model years globally from annual data}
 
 \item{functional_groups}{A vector of names of the functional groups in the model.}
 }
