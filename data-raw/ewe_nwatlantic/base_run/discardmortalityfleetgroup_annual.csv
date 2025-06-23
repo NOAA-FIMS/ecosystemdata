@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:00e775cc55df4fae3a0f7634d710e4b358aa1145c7022dab5b85b44ed4938900
-size 268
+EwEVersion,"6.6.8.18072 (compiled 11/4/2022)"
+Date,"1/5/2024 1:21:45 PM"
+ModelName,"NWACS AM 7ages"
+EcosimScenario,base_run
+TimeSeries,"copyUpdated NWACS MICE 5 v2-1-6-Time series grid"
+StartYear,1985
+
+Data,DiscardMortalityFleetGroup
+
+year,fleet,group,value
