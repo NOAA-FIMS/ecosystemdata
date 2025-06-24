@@ -60,6 +60,7 @@ jobs:
         with:
           extra-packages: |
             devtools
+            local::.
 
       - name: update /data if /data-raw has changed
         run: |
