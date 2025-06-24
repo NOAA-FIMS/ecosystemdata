@@ -1,0 +1,15 @@
+# Runs devtools::spell_check().
+name: call-spell-check
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  call-workflow:
+    uses: nmfs-ost/ghactions4r/.github/workflows/spell-check.yml@main

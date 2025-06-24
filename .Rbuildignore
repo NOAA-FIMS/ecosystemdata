@@ -2,3 +2,7 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^\.devcontainer$
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
