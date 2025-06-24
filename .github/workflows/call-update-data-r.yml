@@ -8,6 +8,8 @@ on:
     # TODO: uncomment following lines once tests are passing
     # branches: 
     #   - main
+    paths:
+      - 'data-raw/**'
   workflow_dispatch:
 
 jobs:

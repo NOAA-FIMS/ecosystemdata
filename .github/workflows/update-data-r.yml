@@ -63,19 +63,13 @@ jobs:
 
       - name: update /data if /data-raw has changed
         run: |
-          files_changed <-  system("git diff --name-only main HEAD", intern = TRUE)
-          data_files_changed <- grep("data-raw/", files_changed, value = TRUE)
-          if (length(data_files_changed) > 0) {
-            r_scripts <- list.files("data-raw", pattern = "\\.R$", full.names = TRUE)
-            if (length(r_scripts) > 0) {
-              for (script in r_scripts) {
-                system(paste("Rscript ", shQuote(script)))
-              }
-            } else {
-              message("No R scripts found in /data-raw.")
+          r_scripts <- list.files("data-raw", pattern = "\\.R$", full.names = TRUE)
+          if (length(r_scripts) > 0) {
+            for (script in r_scripts) {
+              system(paste("Rscript ", shQuote(script)))
             }
           } else {
-            message("No changes in /data-raw, skipping update.")
+            message("No R scripts found in /data-raw.")
           }
         shell: Rscript {0}
         
