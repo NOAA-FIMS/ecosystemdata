@@ -1,0 +1,62 @@
+name: Monthly Maintenance Check
+on:
+  schedule:
+    # Runs at 7:20 AM UTC on the 1st of every month
+    - cron: 20 07 1 * *
+
+jobs:
+  create_issue:
+    name: Create monthly maintenance issue
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create maintenance checklist issue
+        run: |
+          if [[ $CLOSE_PREVIOUS == true ]]; then
+            previous_issue_number=$(gh issue list \
+              --label "$LABELS" \
+              --json number \
+              --jq '.[0].number')
+            if [[ -n $previous_issue_number ]]; then
+              gh issue close "$previous_issue_number"
+              gh issue unpin "$previous_issue_number"
+            fi
+          fi
+          new_issue_url=$(gh issue create \
+            --title "$TITLE" \
+            --assignee "$ASSIGNEES" \
+            --label "$LABELS" \
+            --body "$BODY")
+          if [[ $PINNED == true ]]; then
+            gh issue pin "$new_issue_url"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TITLE: Monthly Maintenance Checklist
+          ASSIGNEES: Bai-Li-NOAA
+          LABELS: maintenance
+          BODY: |
+            ## 📦 Monthly Maintenance Checklist
+
+            - [ ] Confirm README is up to date 
+            - [ ] Confirm there is a link to code of conduct in README; see <https://github.com/NOAA-FIMS/FIMS/blob/main/README.md> for example
+            - [ ] Confirm NOAA disclaimer is in README; see <https://github.com/NOAA-FIMS/FIMS/blob/main/README.md> for example
+            - [ ] Confirm `CONTRIBUTING.md` is up to date
+            - [ ] Confirm `DESCRIPTION` and `NAMESPACE` is up to date
+            - [ ] Review NEWS.md and update if needed
+            - [ ] Call `use_testthat_template()` to use `inst/extdata/template/testthat_template.R` to write tests
+            - [ ] Check `pkgdown` site builds without errors
+            - [ ] Add alt-text to pictures, plots, etc; see <https://posit.co/blog/knitr-fig-alt/> for examples
+            - [ ] Use resuable GitHub Actions workflows from {ghactions4r}; see <https://github.com/nmfs-ost/ghactions4r> for examples
+            - [ ] Confirm all GitHub Actions checks are passing
+            
+            ### Notes
+            Add any notes or additional action items here.
+
+            _Generated automatically by [maintenance-check-issue.yml][1]_
+
+            [1]: https://github.com/NOAA-FIMS/ecosystemdata/tree/main/.github/workflows/maintenance-check-issue.yml
+          PINNED: false
+          CLOSE_PREVIOUS: false
