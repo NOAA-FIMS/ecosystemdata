@@ -1,5 +1,5 @@
 # code to prepare `ewe_nwatlantic` datasets
-
+# TODO: remove this line after testing
 # The functional groups included in the model
 functional_groups <- ecosystemdata::get_functional_groups(
   file_path = fs::path(

@@ -10,7 +10,7 @@ on:
 
 jobs:
   call-workflow:
-    uses: NOAA-FIMS/ecosystemdata/.github/workflows/update-data-r.yml
+    uses: NOAA-FIMS/ecosystemdata/.github/workflows/update-data-r.yml@add-gha-checks
     secrets:
       PAT: ${{ secrets.PAT }}
     with:
