@@ -1,6 +1,6 @@
 # code to prepare `ewe_nwatlantic` datasets
 
-# TODO: remove this line after testing the update-data-r GHA
+# TODO: remove this line after testing the update-data-r GHA; run install()
 # The functional groups included in the model
 functional_groups <- get_functional_groups(
   file_path = fs::path(
