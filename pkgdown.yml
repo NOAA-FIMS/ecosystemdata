@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.3
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-06-24T15:20Z
+last_built: 2025-06-24T15:35Z
 urls:
   reference: https://NOAA-FIMS.github.io/ecosystemdata/reference
   article: https://NOAA-FIMS.github.io/ecosystemdata/articles
